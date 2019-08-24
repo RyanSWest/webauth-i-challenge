@@ -26,7 +26,7 @@ const protected = require ('../auth/protected')
 
       router.post('/', (req, res) => {
         let { username, password } = req.body;
-       console.log(username, password)
+       console.log(username, password, req.session, req.session.username)
       
         Users.findBy({ username })
           .first()

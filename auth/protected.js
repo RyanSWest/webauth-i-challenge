@@ -1,11 +1,45 @@
-const bcrypt= require('bcryptjs');
-const db =require('../data/dbConfig.js');
+const bcrypt = require('bcryptjs');
 
-function protected(req,res,next){ if(req.session&& req.session.username){
+const Users = require('../usersModel');
+
+module.exports = (req, res, next) => {
+  const { username, password } = req.headers;
+  console.log('8888',req.headers)
+
+  if ( req.session) {
+     
     next();
-  }else{
-    res.status(401).json({message:'you shall not pass!'})
-  }
-}
+   
+        } else {
+          res.status(401).json({ message: 'Invalid Credentials' });
+        }
+      
+  
+};
+//  const db =require('../data/dbConfig.js');
 
-module.exports = protected
+// function protected(req,res,next){
+//     // const {username,password}= req.headers;
+//     // if(username&&password){
+//     //   db('users')
+//     //   .where({username})
+//     //   .first()
+//     //   .then(user => {
+//     //     if (user&& bcrypt.compareSync(password,user.password)) {
+//     //       next();
+//     //     } else {
+//     //       res.status(401).json({message: 'You shall not pass!'});
+//     //     }
+//     //   })
+//     //   .catch(err => {
+//     //     res.status(500).json({error:err,message:'Unable to see users at this time'});
+//     //   });
+//     // }
+//     if(req.session&& req.session.username){
+//       next();
+//     }else{
+//       res.status(401).json({message:'you shall not pass!'})
+//     }
+//   }
+
+//   module.exports = protected
