@@ -3,7 +3,7 @@ const express = require('express');
 const helmet = require('helmet');
 const session=require('express-session')
 const KnexSessionStore=require('connect-session-knex')(session);
-
+const db = require('../data/dbConfig')
  const sessionConfig = {
     name: 'cookie',
     secret: 'chocolate chip',
@@ -16,7 +16,8 @@ const KnexSessionStore=require('connect-session-knex')(session);
     saveUninitialized: true,
 
     store: new KnexSessionStore({
-        knex: require('../data/dbConfig'),
+        // knex: require('../data/dbConfig'),
+        knex:db,
         tablename: 'sessions',
         sidfieldname:'sid',
         createtable:true,

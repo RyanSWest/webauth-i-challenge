@@ -26,12 +26,16 @@ const protected = require ('../auth/protected')
 
       router.post('/', (req, res) => {
         let { username, password } = req.body;
-       console.log(username, password, req.session, req.session.username)
-      
+       
         Users.findBy({ username })
           .first()
           .then(user => {
+
             if (user && bcrypt.compareSync(password, user.password)) {
+             console.log(req.session)
+              req.session.user = user;
+              console.log(user)
+
               res.status(200).json({ message: `Welcome ${user.username}!` });
             } else {
               res.status(401).json({ message: 'Invalid Credentials' });
